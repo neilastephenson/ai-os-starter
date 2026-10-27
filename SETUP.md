@@ -51,7 +51,7 @@ Close with: "Anything else I should know?" Keep the whole interview under ten mi
 
 Say what you're doing: turning their answers into a folder of plain text files that you read at the start of every conversation, so you never start from zero.
 
-Create this in the current folder (only the projects they named):
+Create this in the current folder. Every project they named in question 3 gets its own folder and a line in `context/projects/README.md`; don't invent others.
 
 ```
 CLAUDE.md                    how to work with them; read every session
@@ -61,33 +61,30 @@ context/                     what you know about them
     goals.md                 in a year; this month
     preferences.md           how to talk to them, what annoys them, what needs asking first
   projects/
+    README.md                one line per project
     <project-name>/README.md one per project: what it is, where it's at, next step
   people/README.md           people who matter, one line each (only what they mentioned)
   inbox/README.md            drop anything here to be filed
   journal/<today>.md         a short note of today's session
 access/README.md             which tools are connected, cost, how to switch off; never keys
 skills/                      how they like things done
+.claude/skills               a hidden shortcut to skills/ (see below), so Claude finds skills by itself
 automation/README.md         things that run on their own (empty for now; say so in the file)
 ```
 
-The four top-level folders are the four layers, so anyone opening the folder sees Context, Access, Skills, Automation. Keep it that way: everything new goes inside one of them, and only `CLAUDE.md` and `SETUP.md` (plus the hidden `.tools/`) sit beside them.
+The four top-level folders are the four layers, so anyone opening the folder sees Context, Access, Skills, Automation. Keep it that way: everything new goes inside one of them, and only `CLAUDE.md` and `SETUP.md` (plus the hidden `.tools/` and `.claude/`) sit beside them.
 
-Write `CLAUDE.md` from this template, filled in from the interview (keep the lines in brackets out of the final file):
+Then make the hidden shortcut, so the Claude app finds skills on its own (it lists each skill's one-line description at the start of a session and opens the full skill only when it's needed). On a Mac: `mkdir -p .claude && ln -s ../skills .claude/skills`. On Windows: `cmd //c "mklink /J .claude\\skills skills"` after `mkdir -p .claude`; if that fails, skip it, because the Skills table in `CLAUDE.md` does the same job. Don't narrate this beyond one line.
+
+Write `CLAUDE.md` from this template, filled in from the interview. Replace the lines in brackets with the real thing; leave the Skills table with just its header row for now. This file is read every session, so keep it to this length: the detail goes in the `context/` files.
 
 ```markdown
 # How to work with me
 
-This folder is my AI OS. Read this file at the start of every session.
+This folder is my AI OS. You read this file at the start of every session. Read the other files only when a task needs them; the map below says when. Keep this file short: detail goes in the files it points to.
 
-## My folders
-- `context/`: me, my projects, my people, my inbox and journal.
-- `access/`: which tools you can use for me, and how to switch them off.
-- `skills/`: how I like things done.
-- `automation/`: things that run on their own.
-Put anything new inside one of these four; nothing else goes at the top level.
-
-## Who I am
-See `context/me/about.md`. My goals are in `context/me/goals.md`, how I like things in `context/me/preferences.md`.
+## Me in brief
+(Three lines from the interview: my name and where I'm based, what I do, the one thing that matters most this month.)
 
 ## How to talk to me
 - (From the interview: short or detailed, tone, spelling.)
@@ -99,13 +96,29 @@ See `context/me/about.md`. My goals are in `context/me/goals.md`, how I like thi
 - (Anything else from the interview.)
 - Never ask me to paste a password or key into the chat.
 
+## What's where, and when to read it
+- `context/me/`: `about.md` and `preferences.md` before you write anything for me or in my name; `goals.md` when we plan or prioritise.
+- `context/projects/`: `README.md` lists my projects, one line each. When a project comes up, read that project's own `README.md` first.
+- `context/people/README.md`: when someone is named.
+- `context/inbox/`: things I've dropped in to be filed. Only when I ask.
+- `context/journal/`: one note per session. Read the latest when I say "carry on" or ask what we did.
+- `access/README.md`: before you use any outside tool or service.
+- `skills/`: listed below. When a task matches one, read its `SKILL.md` and follow it.
+- `automation/README.md`: what runs on its own. When I ask about it.
+
+Everything new goes inside one of these four folders (context, access, skills, automation); nothing else at the top level.
+
 ## Skills
-- My skills are in `skills/`. Before a task, check for a matching `skills/<name>/SKILL.md` and follow it.
-- When I ask for something I'll probably want again, offer to save it as a skill, and say where it went.
+| Skill | Use it when |
+|---|---|
+(One row per skill: `skills/<name>/SKILL.md`, and when to use it.)
 
 ## Keeping this up to date
-- When I tell you something new about me, my goals or my projects, update the right file and tell me which.
-- Drop anything in `context/inbox/` and I'll ask you to file it.
+- Something new about me, my goals or a project: update the right file and tell me which.
+- A new project: give it a folder in `context/projects/` with a `README.md`, and a line in `context/projects/README.md`.
+- When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, plus a row in the Skills table above.
+- A new tool connected: a row in `access/README.md`.
+- At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.
 ```
 
 Use their own words where you can; don't pad. Then show the folder as a short tree (the four layer folders at the top), open `context/me/about.md` for them (`open context/me/about.md` on a Mac, `start` on Windows), and say: "That's your context layer. You can edit these files yourself, or just tell me, for example 'update my goals'."
@@ -182,11 +195,11 @@ How I like websites built. Follow these steps every time.
 ```
 <!-- skill:build-website:end -->
 
-Then ask one question to make it theirs: "Is there a website you like the look of, or a style you can't stand?" Add the answer under "My taste" in the skill. Say: "That's your skills layer. Any time you do something you'll want again, I'll offer to save it as a skill like this one."
+Then ask one question to make it theirs: "Is there a website you like the look of, or a style you can't stand?" Add the answer under "My taste" in the skill. Add its row to the Skills table in `CLAUDE.md`: `build-website` | a website, landing page or web page, or a change to one. Say: "That's your skills layer. Any time you do something you'll want again, I'll offer to save it as a skill like this one."
 
 ## Step 5: Build the website by talking
 
-Ask: "What website shall we build? It could be for your business, a project, or just for fun." Then follow `skills/build-website/SKILL.md` exactly: questions first, the brief back, build, open it for them, check it at phone size, take their changes. Use a short, lowercase site name with hyphens (for example `marias-bakery`); it becomes the web address. Put the site in that project's folder (rename an existing project folder to match if it's the same project), with a README.
+Ask: "What website shall we build? It could be for your business, a project, or just for fun." Then follow `skills/build-website/SKILL.md` exactly: questions first, the brief back, build, open it for them, check it at phone size, take their changes. Use a short, lowercase site name with hyphens (for example `marias-bakery`); it becomes the web address. Put the site in that project's folder (rename an existing project folder to match if it's the same project), with a README, and keep its line in `context/projects/README.md` up to date.
 
 When they're happy, ask before going live (the skill says how), deploy only on a clear yes, check the address loads, and give them the link to open on their phone.
 
