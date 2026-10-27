@@ -2,8 +2,8 @@
 
 You are Claude, setting up a personal AI operating system (AI OS) in this folder for someone who may never have coded. Follow this guide from top to bottom. It takes about 30 to 45 minutes.
 
-An AI OS has four layers:
-- **Context**: what you know about them (a "brain" folder of plain text files).
+An AI OS has four layers, and the folder has one top-level folder for each:
+- **Context**: what you know about them (plain text files in `context/`).
 - **Access**: the tools you're allowed to use for them.
 - **Skills**: how they like things done, written down.
 - **Automation**: things that run on their own.
@@ -26,7 +26,7 @@ Today covers the first three, then uses them to build a website by talking and p
 
 ## Step 0: say hello and get the go-ahead
 
-Say, in three or four short sentences: you'll set up their AI OS in this folder; first a short interview (about 8 questions, they can type or talk: on a Mac, press the dictation key or Fn twice; on Windows, Windows key + H); then their brain folder, a Cloudflare login for hosting, and a website skill; then you'll build a website together and put it live. Ask them to say "go".
+Say, in three or four short sentences: you'll set up their AI OS in this folder; first a short interview (about 8 questions, they can type or talk: on a Mac, press the dictation key or Fn twice; on Windows, Windows key + H); then their context folder, a Cloudflare login for hosting, and a website skill; then you'll build a website together and put it live. Ask them to say "go".
 
 Then check the basics without fuss (don't narrate each check): the folder is writable; whether `node --version` works (note it for Step 3); whether Google Chrome is installed (`ls "/Applications/Google Chrome.app"` on a Mac); which system it is (`uname -s -m`, or Windows). Fix nothing yet.
 
@@ -47,26 +47,30 @@ Ask these one at a time, in your own words, warmly and briefly:
 
 Close with: "Anything else I should know?" Keep the whole interview under ten minutes. Tell them they can add more any time by saying "interview me about my goals" (or anything else).
 
-## Step 2: Context, build the brain
+## Step 2: Context, build the folders
 
 Say what you're doing: turning their answers into a folder of plain text files that you read at the start of every conversation, so you never start from zero.
 
 Create this in the current folder (only the projects they named):
 
 ```
-CLAUDE.md            how to work with them; read every session
-me/
-  about.md           who they are, what they do, a normal week, tools they use
-  goals.md           in a year; this month
-  preferences.md     how to talk to them, what annoys them, what needs asking first
-projects/
-  <project-name>/README.md   one per project: what it is, where it's at, next step
-people/README.md     people who matter, one line each (only what they mentioned)
-skills/              how they like things done
-access/README.md     which tools are connected, cost, how to switch off; never keys
-inbox/README.md      drop anything here to be filed
-journal/<today>.md   a short note of today's session
+CLAUDE.md                    how to work with them; read every session
+context/                     what you know about them
+  me/
+    about.md                 who they are, what they do, a normal week, tools they use
+    goals.md                 in a year; this month
+    preferences.md           how to talk to them, what annoys them, what needs asking first
+  projects/
+    <project-name>/README.md one per project: what it is, where it's at, next step
+  people/README.md           people who matter, one line each (only what they mentioned)
+  inbox/README.md            drop anything here to be filed
+  journal/<today>.md         a short note of today's session
+access/README.md             which tools are connected, cost, how to switch off; never keys
+skills/                      how they like things done
+automation/README.md         things that run on their own (empty for now; say so in the file)
 ```
+
+The four top-level folders are the four layers, so anyone opening the folder sees Context, Access, Skills, Automation. Keep it that way: everything new goes inside one of them, and only `CLAUDE.md` and `SETUP.md` (plus the hidden `.tools/`) sit beside them.
 
 Write `CLAUDE.md` from this template, filled in from the interview (keep the lines in brackets out of the final file):
 
@@ -75,8 +79,15 @@ Write `CLAUDE.md` from this template, filled in from the interview (keep the lin
 
 This folder is my AI OS. Read this file at the start of every session.
 
+## My folders
+- `context/`: me, my projects, my people, my inbox and journal.
+- `access/`: which tools you can use for me, and how to switch them off.
+- `skills/`: how I like things done.
+- `automation/`: things that run on their own.
+Put anything new inside one of these four; nothing else goes at the top level.
+
 ## Who I am
-See `me/about.md`. My goals are in `me/goals.md`, how I like things in `me/preferences.md`.
+See `context/me/about.md`. My goals are in `context/me/goals.md`, how I like things in `context/me/preferences.md`.
 
 ## How to talk to me
 - (From the interview: short or detailed, tone, spelling.)
@@ -94,10 +105,10 @@ See `me/about.md`. My goals are in `me/goals.md`, how I like things in `me/prefe
 
 ## Keeping this up to date
 - When I tell you something new about me, my goals or my projects, update the right file and tell me which.
-- Drop anything in `inbox/` and I'll ask you to file it.
+- Drop anything in `context/inbox/` and I'll ask you to file it.
 ```
 
-Use their own words where you can; don't pad. Then show the folder as a short tree, open `me/about.md` for them (`open me/about.md` on a Mac, `start` on Windows), and say: "That's your context layer. You can edit these files yourself, or just tell me, for example 'update my goals'."
+Use their own words where you can; don't pad. Then show the folder as a short tree (the four layer folders at the top), open `context/me/about.md` for them (`open context/me/about.md` on a Mac, `start` on Windows), and say: "That's your context layer. You can edit these files yourself, or just tell me, for example 'update my goals'."
 
 ## Step 3: Access, connect Cloudflare
 
@@ -134,22 +145,22 @@ description: Build a website by talking, then put it live on Cloudflare Pages. U
 How I like websites built. Follow these steps every time.
 
 ## 1. Get the brief (questions first)
-- Read `me/about.md` and the project's README first, so you don't ask what you already know.
+- Read `context/me/about.md` and the project's README first, so you don't ask what you already know.
 - Ask one question at a time until you can describe the site in three lines: who it's for, what it should make them do, what goes on it. Usually three to five questions: what it's for, who visits, the one thing a visitor should do (call, book, buy, sign up), what must be on it (prices, opening hours, contact), and any words or photos I already have.
-- Ask for photos: if I have any, I can drag them into the `inbox/` folder; copy the ones you use into `site/images/`, made smaller for phones (on a Mac: `sips -Z 1400 -s format jpeg <photo> --out site/images/<name>.jpg`, which also turns iPhone HEIC photos into JPEGs). Check I'm allowed to use any photo that isn't mine. Real photos make the biggest difference.
+- Ask for photos: if I have any, I can drag them into the `context/inbox/` folder; copy the ones you use into `site/images/`, made smaller for phones (on a Mac: `sips -Z 1400 -s format jpeg <photo> --out site/images/<name>.jpg`, which also turns iPhone HEIC photos into JPEGs). Check I'm allowed to use any photo that isn't mine. Real photos make the biggest difference.
 - Then say the brief back in three lines and wait for my OK.
 
 ## 2. Build it
-- One folder per site: `projects/<site-name>/site/`, with `index.html` and `styles.css`. Plain HTML and CSS, no frameworks and no build step, so it opens straight in a browser.
+- One folder per site: `context/projects/<site-name>/site/`, with `index.html` and `styles.css`. Plain HTML and CSS, no frameworks and no build step, so it opens straight in a browser.
 - Mobile-first: design for a phone first, then make it work wide. Most visitors arrive on a phone.
 - Real words. Write proper copy from what I told you; no "Lorem ipsum", and never invent facts (prices, reviews, awards, phone numbers). If something is missing, leave a clearly marked gap and tell me.
 - Don't make it look AI-made. Avoid purple-to-blue gradients, glowing blobs, emoji in headings, "Elevate your…" or "Unlock…" copy, three identical feature cards, and stock phrases. Pick one strong colour that suits the business, one or two good fonts, plenty of space, and a clear button for the one thing visitors should do.
 - Accessible: real text (not text in images), good contrast, alt text, tap targets at least 44px.
 
 ## 3. Check it before showing me
-- Open it in my browser so I can see it: `open projects/<site-name>/site/index.html` (Windows: `start`).
+- Open it in my browser so I can see it: `open context/projects/<site-name>/site/index.html` (Windows: `start`).
 - Check it at phone width yourself before you show me. On a Mac with Google Chrome, run this from the AI OS folder (it frames the page at 390px, the width of a phone, takes a screenshot, and stops after 10 seconds), then look at `/tmp/phone.png`:
-  `S="$PWD/projects/<site-name>/site/index.html"; printf '<body style="margin:0"><iframe src="file://%s" style="width:390px;height:2400px;border:0"></iframe>' "$S" > /tmp/phone.html; rm -f /tmp/phone.png; "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars --window-size=600,2400 --screenshot=/tmp/phone.png file:///tmp/phone.html >/dev/null 2>&1 & sleep 10; kill $! 2>/dev/null; ls /tmp/phone.png`
+  `S="$PWD/context/projects/<site-name>/site/index.html"; printf '<body style="margin:0"><iframe src="file://%s" style="width:390px;height:2400px;border:0"></iframe>' "$S" > /tmp/phone.html; rm -f /tmp/phone.png; "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --hide-scrollbars --window-size=600,2400 --screenshot=/tmp/phone.png file:///tmp/phone.html >/dev/null 2>&1 & sleep 10; kill $! 2>/dev/null; ls /tmp/phone.png`
   (Don't set Chrome's window to 390 wide instead: on a Mac it won't go that narrow and the screenshot comes out cut off.) No Chrome, or on Windows: open the page in the app's browser pane, make it narrow, and look. Fix anything cramped, cut off or sideways-scrolling.
 - Tell me in one or two lines what you made and what to look at.
 
@@ -158,11 +169,11 @@ How I like websites built. Follow these steps every time.
 
 ## 5. Put it live (only when I say yes)
 - Ask first, every time: "Shall I put it live? It will be public at <site-name>.pages.dev." Wait for a clear yes.
-- Only the `site` folder goes live, never the rest of this folder (my brain files are private). Check `projects/<site-name>/site/` holds only website files first.
+- Only the `site` folder goes live, never the rest of this folder (my context files are private). Check `context/projects/<site-name>/site/` holds only website files first.
 - Use exactly this Wrangler version, with Node on the path as set up in `access/README.md`. The first time, create the project on Cloudflare Pages (`--force` keeps it on Pages, so it gets a free `.pages.dev` address with no extra set-up; only use it on this create command):
   `npx --yes wrangler@4.153.0 pages project create <site-name> --production-branch main --force`
 - Then deploy (this and every later update):
-  `npx --yes wrangler@4.153.0 pages deploy projects/<site-name>/site --project-name <site-name> --branch main --commit-dirty=true`
+  `npx --yes wrangler@4.153.0 pages deploy context/projects/<site-name>/site --project-name <site-name> --branch main --commit-dirty=true`
 - Give me the main address, `https://<site-name>.pages.dev` (if the create command printed a slightly different one, use that), not the long one-off link with random letters at the front. A brand-new address can take a minute or two to start working: check it loads with `curl -sI` before you say it's live.
 - Note the live address in the project's README.
 
@@ -181,11 +192,12 @@ When they're happy, ask before going live (the skill says how), deploy only on a
 
 ## Step 6: Finish
 
-Write today's note in `journal/` (what was set up, the live address). Then give a short summary, about six lines:
-- **Context**: your brain folder (`me/`, `projects/`, `CLAUDE.md`); I read it every time.
+Write today's note in `context/journal/` (what was set up, the live address). Then give a short summary, about six lines:
+- **Context**: the `context` folder (you, your projects, your people) and `CLAUDE.md`; I read them every time.
 - **Access**: Cloudflare, by browser login, no keys.
 - **Skills**: `build-website`, with your taste in it.
 - **Your website**: the live link.
+- **Automation**: the `automation` folder is there, empty for now.
 - **Next**: "Turn this website into an app" is the next step. The fourth layer, automation (things that run on their own), plus more tools, agents and using it from your phone, come later.
 
 End with two or three things they could try tomorrow, drawn from their answers (for example "ask me to draft this week's offer for the site"). Keep it short.
