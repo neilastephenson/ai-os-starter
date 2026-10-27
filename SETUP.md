@@ -73,9 +73,9 @@ automation/README.md         things that run on their own (empty for now; say so
 
 The four top-level folders are the four layers, so anyone opening the folder sees Context, Access, Skills, Automation. Keep it that way: everything new goes inside one of them, and only `CLAUDE.md` and `SETUP.md` (plus the hidden `.tools/` and `.claude/`) sit beside them.
 
-Then make the hidden shortcut, so the Claude app finds skills on its own (it lists each skill's one-line description at the start of a session and opens the full skill only when it's needed). On a Mac: `mkdir -p .claude && ln -s ../skills .claude/skills`. On Windows: `cmd //c "mklink /J .claude\\skills skills"` after `mkdir -p .claude`; if that fails, skip it, because the Skills table in `CLAUDE.md` does the same job. Don't narrate this beyond one line.
+Then make the hidden shortcut, so the Claude app finds skills on its own (it lists each skill's one-line description at the start of a session and opens the full skill only when it's needed). On a Mac: `mkdir -p .claude && ln -s ../skills .claude/skills`. On Windows: `cmd //c "mklink /J .claude\\skills skills"` after `mkdir -p .claude`; if that fails too, skip it: `CLAUDE.md` tells Claude where the skills are. Don't narrate this beyond one line.
 
-Write `CLAUDE.md` from this template, filled in from the interview. Replace the lines in brackets with the real thing; leave the Skills table with just its header row for now. This file is read every session, so keep it to this length: the detail goes in the `context/` files.
+Write `CLAUDE.md` from this template, filled in from the interview. Replace the lines in brackets with the real thing. This file is read every session, so keep it to this length: the detail goes in the `context/` files.
 
 ```markdown
 # How to work with me
@@ -101,20 +101,15 @@ This folder is my AI OS. You read this file at the start of every session. Read 
 - `context/people/README.md`: when someone is named.
 - `context/journal/`: one note per session. Read the latest when I say "carry on" or ask what we did.
 - `access/README.md`: before you use any outside tool or service.
-- `skills/`: listed below. When a task matches one, read its `SKILL.md` and follow it.
+- `skills/`: you find these by yourself; each `SKILL.md` starts with a line saying when to use it. When a task matches one, follow it. If none show up, look in `skills/*/SKILL.md`.
 - `automation/README.md`: what runs on its own. When I ask about it.
 
 Everything new goes inside one of these four folders (context, access, skills, automation); nothing else at the top level.
 
-## Skills
-| Skill | Use it when |
-|---|---|
-(One row per skill: `skills/<name>/SKILL.md`, and when to use it.)
-
 ## Keeping this up to date
 - Something new about me, my goals or a project: update the right file and tell me which.
 - A new project: give it a folder in `context/projects/` with a `README.md`, and a line in `context/projects/README.md`.
-- When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, plus a row in the Skills table above.
+- When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, starting with its name and one line on when to use it.
 - A new tool connected: a row in `access/README.md`.
 - At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.
 ```
@@ -193,7 +188,7 @@ How I like websites built. Follow these steps every time.
 ```
 <!-- skill:build-website:end -->
 
-Then ask one question to make it theirs: "Is there a website you like the look of, or a style you can't stand?" Add the answer under "My taste" in the skill. Add its row to the Skills table in `CLAUDE.md`: `build-website` | a website, landing page or web page, or a change to one. Say: "That's your skills layer. Any time you do something you'll want again, I'll offer to save it as a skill like this one."
+Then ask one question to make it theirs: "Is there a website you like the look of, or a style you can't stand?" Add the answer under "My taste" in the skill. Say: "That's your skills layer. Any time you do something you'll want again, I'll offer to save it as a skill like this one."
 
 ## Step 5: Build the website by talking
 
