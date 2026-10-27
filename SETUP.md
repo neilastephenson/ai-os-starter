@@ -75,15 +75,19 @@ The four top-level folders are the four layers, so anyone opening the folder see
 
 Then make the hidden shortcut, so the Claude app finds skills on its own (it lists each skill's one-line description at the start of a session and opens the full skill only when it's needed). On a Mac: `mkdir -p .claude && ln -s ../skills .claude/skills`. On Windows: `cmd //c "mklink /J .claude\\skills skills"` after `mkdir -p .claude`; if that fails too, skip it: `CLAUDE.md` tells Claude where the skills are. Don't narrate this beyond one line.
 
-Write `CLAUDE.md` from this template, filled in from the interview. Replace the lines in brackets with the real thing. This file is read every session, so keep it to this length: the detail goes in the `context/` files.
+Write `CLAUDE.md` from this template, filled in from the interview. Replace the lines in brackets with the real thing. Keep the `@` lines exactly as they are: they make those four files load every session. Keep this file to this length: the detail goes in the `context/` files.
 
 ```markdown
 # How to work with me
 
-This folder is my AI OS. You read this file at the start of every session. Read the other files only when a task needs them; the map below says when. Keep this file short: detail goes in the files it points to.
+This folder is my AI OS. This file, and the four files below, load at the start of every session. Read anything else only when a task needs it; the map below says when.
 
-## Me in brief
-(Three lines from the interview: my name and where I'm based, what I do, the one thing that matters most this month.)
+## Always loaded
+Who I am, how I like things, what I'm aiming for and what I'm working on:
+@context/me/about.md
+@context/me/preferences.md
+@context/me/goals.md
+@context/projects/README.md
 
 ## How to talk to me
 - (From the interview: short or detailed, tone, spelling.)
@@ -96,8 +100,7 @@ This folder is my AI OS. You read this file at the start of every session. Read 
 - Never ask me to paste a password or key into the chat.
 
 ## What's where, and when to read it
-- `context/me/`: `about.md` and `preferences.md` before you write anything for me or in my name; `goals.md` when we plan or prioritise.
-- `context/projects/`: `README.md` lists my projects, one line each. When a project comes up, read that project's own `README.md` first.
+- `context/projects/<name>/README.md`: when that project comes up (the list is already loaded).
 - `context/people/README.md`: when someone is named; then their own file if they have one.
 - `context/journal/`: one note per session. Read only the latest when I say "carry on"; search it for a word when I ask about something past.
 - `access/README.md`: one line per connected tool. Before you use a tool, read its line, then its own file if it has one.
@@ -108,6 +111,7 @@ Everything new goes inside one of these four folders (context, access, skills, a
 
 ## How this folder grows
 - Every folder's `README.md` is its index: one line per thing inside it. Read the index, then only the file you need. Never read a whole folder.
+- The always-loaded files stay short: about 40 lines each. Anything longer moves into a project or its own file.
 - Keep files short. When a file passes about 100 lines, or an index about 40 lines, split it: give each part its own file and leave a one-line pointer in the index.
 - A person or tool that needs more than a line gets its own file (`context/people/<name>.md`, `access/<tool>.md`), linked from the index.
 - Skills: `SKILL.md` holds the steps and stays short. Long detail, examples and templates go in `skills/<name>/references/`, and the steps say when to open them.
