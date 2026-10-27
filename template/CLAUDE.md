@@ -19,7 +19,6 @@ This folder is my AI OS. You read this file at the start of every session. Read 
 - `context/me/`: `about.md` and `preferences.md` before you write anything for me or in my name; `goals.md` when we plan or prioritise.
 - `context/projects/`: `README.md` lists my projects, one line each. When a project comes up, read that project's own `README.md` first.
 - `context/people/README.md`: when someone is named.
-- `context/inbox/`: things I've dropped in to be filed. Only when I ask.
 - `context/journal/`: one note per session. Read the latest when I say "carry on" or ask what we did.
 - `access/README.md`: before you use any outside tool or service.
 - `skills/`: listed below. When a task matches one, read its `SKILL.md` and follow it.

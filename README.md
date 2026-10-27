@@ -40,7 +40,7 @@ Claude asks before it runs a command or writes a file. Read what it wants to do 
 
 ## After setup
 
-- Add more about yourself any time: "interview me about my goals", or drop a document in `context/inbox/` and ask Claude to file it.
+- Add more about yourself any time: "interview me about my goals", or drag a document into the chat and ask Claude to file what matters.
 - Change how anything works by saying so, or by editing the files. They're yours.
 - Next: turning the website into an app, then automation (things that run on their own). See Neil's channel.
 

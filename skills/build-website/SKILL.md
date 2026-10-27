@@ -10,7 +10,7 @@ How I like websites built. Follow these steps every time.
 ## 1. Get the brief (questions first)
 - Read `context/me/about.md` and the project's README first, so you don't ask what you already know.
 - Ask one question at a time until you can describe the site in three lines: who it's for, what it should make them do, what goes on it. Usually three to five questions: what it's for, who visits, the one thing a visitor should do (call, book, buy, sign up), what must be on it (prices, opening hours, contact), and any words or photos I already have.
-- Ask for photos: if I have any, I can drag them into the `context/inbox/` folder; copy the ones you use into `site/images/`, made smaller for phones (on a Mac: `sips -Z 1400 -s format jpeg <photo> --out site/images/<name>.jpg`, which also turns iPhone HEIC photos into JPEGs). Check I'm allowed to use any photo that isn't mine. Real photos make the biggest difference.
+- Ask for photos: if I have any, I can drag them into the chat or tell you where they are (my Desktop or Downloads, say); copy the ones you use into `site/images/`, made smaller for phones (on a Mac: `sips -Z 1400 -s format jpeg <photo> --out site/images/<name>.jpg`, which also turns iPhone HEIC photos into JPEGs). Check I'm allowed to use any photo that isn't mine. Real photos make the biggest difference.
 - Then say the brief back in three lines and wait for my OK.
 
 ## 2. Build it
