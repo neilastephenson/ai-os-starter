@@ -33,7 +33,7 @@ How I like websites built. Follow these steps every time.
 ## 5. Put it live (only when I say yes)
 - Ask first, every time: "Shall I put it live? It will be public at <site-name>.pages.dev." Wait for a clear yes.
 - Only the `site` folder goes live, never the rest of this folder (my context files are private). Check `context/projects/<site-name>/site/` holds only website files first.
-- Use exactly this Wrangler version, with Node on the path as set up in `access/README.md`. The first time, create the project on Cloudflare Pages (`--force` keeps it on Pages, so it gets a free `.pages.dev` address with no extra set-up; only use it on this create command):
+- Use exactly this Wrangler version, with Node on the path as set up in `access/cloudflare.md`. The first time, create the project on Cloudflare Pages (`--force` keeps it on Pages, so it gets a free `.pages.dev` address with no extra set-up; only use it on this create command):
   `npx --yes wrangler@4.153.0 pages project create <site-name> --production-branch main --force`
 - Then deploy (this and every later update):
   `npx --yes wrangler@4.153.0 pages deploy context/projects/<site-name>/site --project-name <site-name> --branch main --commit-dirty=true`

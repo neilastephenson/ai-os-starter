@@ -18,17 +18,24 @@ This folder is my AI OS. You read this file at the start of every session. Read 
 ## What's where, and when to read it
 - `context/me/`: `about.md` and `preferences.md` before you write anything for me or in my name; `goals.md` when we plan or prioritise.
 - `context/projects/`: `README.md` lists my projects, one line each. When a project comes up, read that project's own `README.md` first.
-- `context/people/README.md`: when someone is named.
-- `context/journal/`: one note per session. Read the latest when I say "carry on" or ask what we did.
-- `access/README.md`: before you use any outside tool or service.
+- `context/people/README.md`: when someone is named; then their own file if they have one.
+- `context/journal/`: one note per session. Read only the latest when I say "carry on"; search it for a word when I ask about something past.
+- `access/README.md`: one line per connected tool. Before you use a tool, read its line, then its own file if it has one.
 - `skills/`: you find these by yourself; each `SKILL.md` starts with a line saying when to use it. When a task matches one, follow it. If none show up, look in `skills/*/SKILL.md`.
 - `automation/README.md`: what runs on its own. When I ask about it.
 
 Everything new goes inside one of these four folders (context, access, skills, automation); nothing else at the top level.
 
+## How this folder grows
+- Every folder's `README.md` is its index: one line per thing inside it. Read the index, then only the file you need. Never read a whole folder.
+- Keep files short. When a file passes about 100 lines, or an index about 40 lines, split it: give each part its own file and leave a one-line pointer in the index.
+- A person or tool that needs more than a line gets its own file (`context/people/<name>.md`, `access/<tool>.md`), linked from the index.
+- Skills: `SKILL.md` holds the steps and stays short. Long detail, examples and templates go in `skills/<name>/references/`, and the steps say when to open them.
+- Say each thing once, in one place; elsewhere, point to it.
+
 ## Keeping this up to date
 - Something new about me, my goals or a project: update the right file and tell me which.
 - A new project: give it a folder in `context/projects/` with a `README.md`, and a line in `context/projects/README.md`.
 - When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, starting with its name and one line on when to use it.
-- A new tool connected: a row in `access/README.md`.
+- A new tool connected: a line in `access/README.md`.
 - At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.

@@ -1,6 +1,4 @@
 # Access
 
-Which tools I can use for you, what they cost, and how to switch them off. Never the keys themselves.
+One line per tool I can use for you: what it's for, what it costs, how it's connected, how to switch it off. Never the keys themselves. A tool that needs more (set-up steps, limits, gotchas) gets its own file, `access/<tool>.md`, linked from its line.
 
-| Tool | What it's for | Cost | How it's connected | How to switch it off |
-|---|---|---|---|---|

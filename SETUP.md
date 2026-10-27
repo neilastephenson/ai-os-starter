@@ -65,7 +65,7 @@ context/                     what you know about them
     <project-name>/README.md one per project: what it is, where it's at, next step
   people/README.md           people who matter, one line each (only what they mentioned)
   journal/<today>.md         a short note of today's session
-access/README.md             which tools are connected, cost, how to switch off; never keys
+access/README.md             one line per tool: what for, cost, how connected, how to switch off; never keys
 skills/                      how they like things done
 .claude/skills               a hidden shortcut to skills/ (see below), so Claude finds skills by itself
 automation/README.md         things that run on their own (empty for now; say so in the file)
@@ -98,19 +98,26 @@ This folder is my AI OS. You read this file at the start of every session. Read 
 ## What's where, and when to read it
 - `context/me/`: `about.md` and `preferences.md` before you write anything for me or in my name; `goals.md` when we plan or prioritise.
 - `context/projects/`: `README.md` lists my projects, one line each. When a project comes up, read that project's own `README.md` first.
-- `context/people/README.md`: when someone is named.
-- `context/journal/`: one note per session. Read the latest when I say "carry on" or ask what we did.
-- `access/README.md`: before you use any outside tool or service.
+- `context/people/README.md`: when someone is named; then their own file if they have one.
+- `context/journal/`: one note per session. Read only the latest when I say "carry on"; search it for a word when I ask about something past.
+- `access/README.md`: one line per connected tool. Before you use a tool, read its line, then its own file if it has one.
 - `skills/`: you find these by yourself; each `SKILL.md` starts with a line saying when to use it. When a task matches one, follow it. If none show up, look in `skills/*/SKILL.md`.
 - `automation/README.md`: what runs on its own. When I ask about it.
 
 Everything new goes inside one of these four folders (context, access, skills, automation); nothing else at the top level.
 
+## How this folder grows
+- Every folder's `README.md` is its index: one line per thing inside it. Read the index, then only the file you need. Never read a whole folder.
+- Keep files short. When a file passes about 100 lines, or an index about 40 lines, split it: give each part its own file and leave a one-line pointer in the index.
+- A person or tool that needs more than a line gets its own file (`context/people/<name>.md`, `access/<tool>.md`), linked from the index.
+- Skills: `SKILL.md` holds the steps and stays short. Long detail, examples and templates go in `skills/<name>/references/`, and the steps say when to open them.
+- Say each thing once, in one place; elsewhere, point to it.
+
 ## Keeping this up to date
 - Something new about me, my goals or a project: update the right file and tell me which.
 - A new project: give it a folder in `context/projects/` with a `README.md`, and a line in `context/projects/README.md`.
 - When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, starting with its name and one line on when to use it.
-- A new tool connected: a row in `access/README.md`.
+- A new tool connected: a line in `access/README.md`.
 - At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.
 ```
 
@@ -131,7 +138,7 @@ Say: "Next, access: which doors I'm allowed to open. Today we need one: Cloudfla
 
 **3b. Log in.** Use exactly `wrangler@4.153.0` (tested with this guide). Check first: `npx --yes wrangler@4.153.0 whoami`. If it shows they're logged in, skip ahead. Otherwise say: "A browser window will open. Log in to Cloudflare, or sign up, then click Allow. Come back here when it says you're done." Then run `npx --yes wrangler@4.153.0 login` with a 5-minute time limit and wait (it finishes by itself once they click Allow; the page lists a lot of permissions, which is normal for Cloudflare's own tool). Confirm with `npx --yes wrangler@4.153.0 whoami` and tell them which account it's connected to (the email it shows).
 
-**3c. Write it down.** Fill in `access/README.md`: Cloudflare, for hosting websites, free plan, connected by browser login with Wrangler, switch off with `npx wrangler logout` or in the Cloudflare dashboard under My Profile → API Tokens. Add how to run Node here (the PATH line above, if you used `.tools`). Say: "That's your access layer: one door open, and no keys in this chat."
+**3c. Write it down.** Add one line to `access/README.md`: Cloudflare, for hosting websites, free plan, connected by browser login, switch off with `npx wrangler logout`; details in `access/cloudflare.md`. Then write `access/cloudflare.md`: the account it's logged in as (if Wrangler showed it), how it's connected (browser login with Wrangler), how to run Node and Wrangler from this folder (the PATH line above, if you used `.tools`), and how to switch it off (`npx wrangler logout`, or the Cloudflare dashboard under My Profile → API Tokens). Say: "That's your access layer: one door open, and no keys in this chat."
 
 ## Step 4: Skills, the website skill
 
@@ -176,7 +183,7 @@ How I like websites built. Follow these steps every time.
 ## 5. Put it live (only when I say yes)
 - Ask first, every time: "Shall I put it live? It will be public at <site-name>.pages.dev." Wait for a clear yes.
 - Only the `site` folder goes live, never the rest of this folder (my context files are private). Check `context/projects/<site-name>/site/` holds only website files first.
-- Use exactly this Wrangler version, with Node on the path as set up in `access/README.md`. The first time, create the project on Cloudflare Pages (`--force` keeps it on Pages, so it gets a free `.pages.dev` address with no extra set-up; only use it on this create command):
+- Use exactly this Wrangler version, with Node on the path as set up in `access/cloudflare.md`. The first time, create the project on Cloudflare Pages (`--force` keeps it on Pages, so it gets a free `.pages.dev` address with no extra set-up; only use it on this create command):
   `npx --yes wrangler@4.153.0 pages project create <site-name> --production-branch main --force`
 - Then deploy (this and every later update):
   `npx --yes wrangler@4.153.0 pages deploy context/projects/<site-name>/site --project-name <site-name> --branch main --commit-dirty=true`
