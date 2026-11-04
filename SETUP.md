@@ -8,7 +8,7 @@ An AI OS has four layers, and the folder has one top-level folder for each:
 - **Skills**: how they like things done, written down.
 - **Automation**: things that run on their own.
 
-Today covers the first three, then uses them to build a website by talking and put it live. Automation and the rest come later (see Step 6).
+Today sets up the folder and the first three layers, then uses them to make one real first thing, which the person picks from a few ideas based on what they tell you (a website, put live, is always one of the ideas). After today the folder keeps growing: new tools, new skills, new projects, and later automation. `CLAUDE.md` says how.
 
 ## Rules (follow all the way through)
 
@@ -26,9 +26,9 @@ Today covers the first three, then uses them to build a website by talking and p
 
 ## Step 0: say hello and get the go-ahead
 
-Say, in three or four short sentences: you'll set up their AI OS in this folder; first a short interview (about 8 questions, they can type or talk: on a Mac, press the dictation key or Fn twice; on Windows, Windows key + H); then their context folder, a Cloudflare login for hosting, and a website skill; then you'll build a website together and put it live. Ask them to say "go".
+Say, in three or four short sentences: you'll set up their AI OS in this folder; first a short interview (about 8 questions, they can type or talk: on a Mac, press the dictation key or Fn twice; on Windows, Windows key + H); then their context folder; then you'll suggest a few first things to make from what they've told you, and set up the access and the skill that one needs. This is a starting point: after today they can take it anywhere. Ask them to say "go".
 
-Then check the basics without fuss (don't narrate each check): the folder is writable; whether `node --version` works (note it for Step 3); whether Google Chrome is installed (`ls "/Applications/Google Chrome.app"` on a Mac); which system it is (`uname -s -m`, or Windows). Fix nothing yet.
+Then check the basics without fuss (don't narrate each check): the folder is writable; whether `node --version` works (note it for Step 4); whether Google Chrome is installed (`ls "/Applications/Google Chrome.app"` on a Mac); which system it is (`uname -s -m`, or Windows). Fix nothing yet.
 
 ## Step 1: Context, the interview
 
@@ -121,17 +121,32 @@ Everything new goes inside one of these four folders (context, access, skills, a
 - Something new about me, my goals or a project: update the right file and tell me which.
 - A new project: give it a folder in `context/projects/` with a `README.md`, and a line in `context/projects/README.md`.
 - When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, starting with its name and one line on when to use it.
-- A new tool connected: a line in `access/README.md`.
+- A new tool: connect it the safest way that works (the Claude app's own connector, then the tool's browser login; an API key only if nothing else works, pasted by me into `access/.env`, never into the chat). Then a line in `access/README.md`, and `access/<tool>.md` if it needs more.
+- Something I want to happen on its own (every morning, every week): explain the options and what each costs, ask first, and note it in `automation/README.md`.
 - At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.
 ```
 
 Use their own words where you can; don't pad. Then show the folder as a short tree (the four layer folders at the top), open `context/me/about.md` for them (`open context/me/about.md` on a Mac, `start` on Windows), and say: "That's your context layer. You can edit these files yourself, or just tell me, for example 'update my goals'."
 
-## Step 3: Access, connect Cloudflare
+## Step 3: Pick a first thing to make
+
+Say: "Now let's use it. Here are three things we could make first, from what you've told me." Suggest three, each in one line, drawn from their answers: the thing they said would make the biggest difference this month, something from their normal week they repeat or dislike, and a website (for their business, a project, or themselves). Say which you'd start with and why in a sentence, then let them pick, or suggest their own.
+
+- **Website:** follow Steps 4 to 6 below exactly as written (Cloudflare, the website skill, build and put live).
+- **Anything else:** follow "Another first thing" below instead of Steps 4 to 6, then go to Step 7.
+
+## Another first thing (only if they didn't pick a website)
+
+Keep it to something you can finish together today.
+1. **Access:** say which tools it needs. If it needs none, say so and move on. If it does, connect it the safest way that works: the Claude app's own connector for that tool, if there is one; otherwise the tool's own browser login. If only an API key will do, ask them to paste it themselves into `access/.env` in a text editor (never into the chat), and read it from there. Write one line in `access/README.md` and, if it needs more, `access/<tool>.md` (what it's for, cost, how it's connected, how to switch it off; never the key). Say: "That's your access layer."
+2. **Skill:** ask how they like this done (two or three questions at most), write it as `skills/<name>/SKILL.md` starting with its name and a one-line "use when" description, then follow it. Say: "That's your skills layer: written down once, done your way every time."
+3. **Make it:** follow the skill, show them the result, take their changes, and ask before anything public, paid or sent to someone else.
+
+## Step 4: Access, connect Cloudflare
 
 Say: "Next, access: which doors I'm allowed to open. Today we need one: Cloudflare, a free service that will host your website. You'll log in in your browser; you never paste a password or key here." Ask if they have a free Cloudflare account; if not, they can sign up on the login page in a moment (free, no card).
 
-**3a. Node.** Cloudflare's tool (Wrangler) needs Node, a free program that runs it. If `node --version` worked in Step 0 and shows v20 or newer, use it. Otherwise:
+**4a. Node.** Cloudflare's tool (Wrangler) needs Node, a free program that runs it. If `node --version` worked in Step 0 and shows v20 or newer, use it. Otherwise:
 
 - **Mac** (no password needed, nothing installed system-wide): say "I'm downloading Node into a hidden tools folder here; about a minute." Then run, as one command:
   ```
@@ -140,11 +155,11 @@ Say: "Next, access: which doors I'm allowed to open. Today we need one: Cloudfla
   From now on, start every command that uses Node or npx with `export PATH="$PWD/.tools/node/bin:$PATH" &&` (run from this folder).
 - **Windows**: run `winget install -e --id OpenJS.NodeJS.LTS --accept-source-agreements --accept-package-agreements`, tell them to click Yes if Windows asks, then ask them to close and reopen the Claude app in this folder and say "carry on".
 
-**3b. Log in.** Use exactly `wrangler@4.153.0` (tested with this guide). Check first: `npx --yes wrangler@4.153.0 whoami`. If it shows they're logged in, skip ahead. Otherwise say: "A browser window will open. Log in to Cloudflare, or sign up, then click Allow. Come back here when it says you're done." Then run `npx --yes wrangler@4.153.0 login` with a 5-minute time limit and wait (it finishes by itself once they click Allow; the page lists a lot of permissions, which is normal for Cloudflare's own tool). Confirm with `npx --yes wrangler@4.153.0 whoami` and tell them which account it's connected to (the email it shows).
+**4b. Log in.** Use exactly `wrangler@4.153.0` (tested with this guide). Check first: `npx --yes wrangler@4.153.0 whoami`. If it shows they're logged in, skip ahead. Otherwise say: "A browser window will open. Log in to Cloudflare, or sign up, then click Allow. Come back here when it says you're done." Then run `npx --yes wrangler@4.153.0 login` with a 5-minute time limit and wait (it finishes by itself once they click Allow; the page lists a lot of permissions, which is normal for Cloudflare's own tool). Confirm with `npx --yes wrangler@4.153.0 whoami` and tell them which account it's connected to (the email it shows).
 
-**3c. Write it down.** Add one line to `access/README.md`: Cloudflare, for hosting websites, free plan, connected by browser login, switch off with `npx wrangler logout`; details in `access/cloudflare.md`. Then write `access/cloudflare.md`: the account it's logged in as (if Wrangler showed it), how it's connected (browser login with Wrangler), how to run Node and Wrangler from this folder (the PATH line above, if you used `.tools`), and how to switch it off (`npx wrangler logout`, or the Cloudflare dashboard under My Profile → API Tokens). Say: "That's your access layer: one door open, and no keys in this chat."
+**4c. Write it down.** Add one line to `access/README.md`: Cloudflare, for hosting websites, free plan, connected by browser login, switch off with `npx wrangler logout`; details in `access/cloudflare.md`. Then write `access/cloudflare.md`: the account it's logged in as (if Wrangler showed it), how it's connected (browser login with Wrangler), how to run Node and Wrangler from this folder (the PATH line above, if you used `.tools`), and how to switch it off (`npx wrangler logout`, or the Cloudflare dashboard under My Profile → API Tokens). Say: "That's your access layer: one door open, and no keys in this chat."
 
-## Step 4: Skills, the website skill
+## Step 5: Skills, the website skill
 
 Say: "A skill is your way of doing something, written down, so I do it like that every time. Here's one for building websites."
 
@@ -201,20 +216,20 @@ How I like websites built. Follow these steps every time.
 
 Then ask one question to make it theirs: "Is there a website you like the look of, or a style you can't stand?" Add the answer under "My taste" in the skill. Say: "That's your skills layer. Any time you do something you'll want again, I'll offer to save it as a skill like this one."
 
-## Step 5: Build the website by talking
+## Step 6: Build the website by talking
 
-Ask: "What website shall we build? It could be for your business, a project, or just for fun." Then follow `skills/build-website/SKILL.md` exactly: questions first, the brief back, build, open it for them, check it at phone size, take their changes. Use a short, lowercase site name with hyphens (for example `marias-bakery`); it becomes the web address. Put the site in that project's folder (rename an existing project folder to match if it's the same project), with a README, and keep its line in `context/projects/README.md` up to date.
+Ask what the site is for, if they haven't already said (their business, a project, or themselves). Then follow `skills/build-website/SKILL.md` exactly: questions first, the brief back, build, open it for them, check it at phone size, take their changes. Use a short, lowercase site name with hyphens (for example `marias-bakery`); it becomes the web address. Put the site in that project's folder (rename an existing project folder to match if it's the same project), with a README, and keep its line in `context/projects/README.md` up to date.
 
 When they're happy, ask before going live (the skill says how), deploy only on a clear yes, check the address loads, and give them the link to open on their phone.
 
-## Step 6: Finish
+## Step 7: Finish
 
-Write today's note in `context/journal/` (what was set up, the live address). Then give a short summary, about six lines:
+Write today's note in `context/journal/` (what was set up, what you made, any live address). Then give a short summary, about six lines:
 - **Context**: the `context` folder (you, your projects, your people) and `CLAUDE.md`; I read them every time.
-- **Access**: Cloudflare, by browser login, no keys.
-- **Skills**: `build-website`, with your taste in it.
-- **Your website**: the live link.
+- **Access**: what's connected and how, with no keys in this chat.
+- **Skills**: the skill you made today, with their way of doing it in it.
+- **What you made**: the result (the live link, if it's a website).
 - **Automation**: the `automation` folder is there, empty for now.
-- **Next**: "Turn this website into an app" is the next step. The fourth layer, automation (things that run on their own), plus more tools, agents and using it from your phone, come later.
+- **From here**: "This is your starting point. Ask me for anything: when it needs a new tool I'll connect it and note it in `access/`; when you'll want something again I'll save it as a skill; new projects get their own folder. Things that run on their own come later."
 
-End with two or three things they could try tomorrow, drawn from their answers (for example "ask me to draft this week's offer for the site"). Keep it short.
+End with three things they could ask for next, drawn from their answers (for example "ask me to draft this week's newsletter" or "connect my calendar and plan my week"). Keep it short.

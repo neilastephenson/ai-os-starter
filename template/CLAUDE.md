@@ -41,5 +41,6 @@ Everything new goes inside one of these four folders (context, access, skills, a
 - Something new about me, my goals or a project: update the right file and tell me which.
 - A new project: give it a folder in `context/projects/` with a `README.md`, and a line in `context/projects/README.md`.
 - When I ask for something I'll probably want again, offer to save it as a skill: `skills/<name>/SKILL.md`, starting with its name and one line on when to use it.
-- A new tool connected: a line in `access/README.md`.
+- A new tool: connect it the safest way that works (the Claude app's own connector, then the tool's browser login; an API key only if nothing else works, pasted by me into `access/.env`, never into the chat). Then a line in `access/README.md`, and `access/<tool>.md` if it needs more.
+- Something I want to happen on its own (every morning, every week): explain the options and what each costs, ask first, and note it in `automation/README.md`.
 - At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.
