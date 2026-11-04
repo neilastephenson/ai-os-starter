@@ -126,7 +126,7 @@ Everything new goes inside one of these four folders (context, access, skills, a
 - At the end of a session where something was made or decided, add a few lines to `context/journal/<today>.md`.
 ```
 
-Use their own words where you can; don't pad. Then show the folder as a short tree (the four layer folders at the top), open `context/me/about.md` for them (`open context/me/about.md` on a Mac, `start` on Windows), and say: "That's your context layer. You can edit these files yourself, or just tell me, for example 'update my goals'."
+Use their own words where you can; don't pad. Then show the folder as a short tree (the four layer folders at the top), open `context/me/about.md` for them in the plain text editor (`open -e context/me/about.md` on a Mac, which is TextEdit; `notepad context\me\about.md` on Windows; never plain `open` or `start`, which can pick some other app), and say: "That's your context layer. You can edit these files yourself, or just tell me, for example 'update my goals'."
 
 ## Step 3: Pick a first thing to make
 
